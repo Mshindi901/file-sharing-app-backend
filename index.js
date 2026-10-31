@@ -10,7 +10,11 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
-app.use(cors({origin: [process.env.FRONTEND_URL]}));
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'https://file-sharing-app-frontend-eta.vercel.app'
+].filter((origin) => Boolean(origin));
+app.use(cors({origin: allowedOrigins}));
 app.use(express.json());
 
 app.use('/api', UserRoutes);
