@@ -6,7 +6,6 @@ export default async function delete_expired_files(){
     try {
         const expired_files = await File.findAll({where:{expires_at: {[Op.lte]: new Date()}}, limit: 100});
         if(!expired_files || expired_files.length === 0){
-            throw new Error('Error with getting expired files, None Fetched');
             return;
         };
         for(const File of expired_files){

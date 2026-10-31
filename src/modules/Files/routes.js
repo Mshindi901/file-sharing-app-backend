@@ -11,9 +11,9 @@ import {upload} from '../../middleware/multer.js';
 
 const router = express.Router();
 
-router.post('/file', upload.single('file'), add_file);
+router.post('/file', authenticate, authorize('user'), upload.single('file'), add_file);
 router.get('/file/user', authenticate, authorize('user'), get_user_files);
-router.get('/file/:id', authenticate, get_file_by_id);
+router.get('/file/:id', authenticate, authorize('user'), get_file_by_id);
 router.get('/file/share/:token', share_file);
 router.delete('/file/:id', authenticate, authorize('user'), deleteFile);
 
