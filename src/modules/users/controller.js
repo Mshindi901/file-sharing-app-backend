@@ -64,6 +64,19 @@ export const admin_sign_up = async(req, res) => {
     }
 };
 
+export const get_all_users = async(req, res) => {
+    try {
+        const users = await User.findAll({
+            attributes: ['id', 'name', 'email', 'role', 'createdAt'],
+            order: [['createdAt', 'DESC']]
+        });
+        return res.status(200).json({success: true, message: 'Users Fetched', data: users});
+    } catch (error) {
+        console.error(`Error with getting all user records ${error}`);
+        return res.status(500).json({success: false, message: 'Internal Server Error'});
+    }
+};
+
 export const get_user_by_email = async(req, res) => {
     try {
         const {email} = req.query.q;
